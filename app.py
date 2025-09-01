@@ -26,7 +26,7 @@ app.include_router(admin_reset_router)
 app.include_router(leaderboard_get_router)
 app.include_router(leaderboard_post_router)
 
-@app.on_event("startup")
+"""@app.on_event("startup")
 async def _startup():
     start_scheduler()  # now there's a running loop
 
@@ -34,7 +34,7 @@ async def _startup():
 async def _shutdown():
     # optional: stop the scheduler cleanly
     if scheduler and scheduler.running:
-        scheduler.shutdown(wait=False)
+        scheduler.shutdown(wait=False)"""
 
 
 @app.get("/ping")

@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+gunicorn
+motor
+python-dotenv
+pydantic
+apscheduler

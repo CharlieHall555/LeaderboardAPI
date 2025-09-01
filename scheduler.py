@@ -4,13 +4,16 @@ from repo.leaderboard_repo import LeaderboardRepository
 from datetime import datetime
 import calendar
 
+# scheduler.py
+scheduler: AsyncIOScheduler | None = None
+
 def start_scheduler():
-    scheduler = AsyncIOScheduler()
-
+    global scheduler
+    if scheduler and scheduler.running:
+        return
+    scheduler = AsyncIOScheduler(timezone="UTC")
     scheduler.add_job(LeaderboardRepository.reset_weekly, "cron", day_of_week="mon", hour=0, minute=0)
-
     scheduler.add_job(LeaderboardRepository.reset_monthly, "cron", day=1, hour=0, minute=0)
-
     scheduler.start()
 
 

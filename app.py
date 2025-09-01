@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException, status, Security
 from fastapi.security.api_key import APIKeyHeader
-from scheduler import start_scheduler
+from scheduler import scheduler , start_scheduler
 from config import Config
 
 
@@ -26,7 +26,15 @@ app.include_router(admin_reset_router)
 app.include_router(leaderboard_get_router)
 app.include_router(leaderboard_post_router)
 
-start_scheduler()
+@app.on_event("startup")
+async def _startup():
+    start_scheduler()  # now there's a running loop
+
+@app.on_event("shutdown")
+async def _shutdown():
+    # optional: stop the scheduler cleanly
+    if scheduler and scheduler.running:
+        scheduler.shutdown(wait=False)
 
 
 @app.get("/ping")

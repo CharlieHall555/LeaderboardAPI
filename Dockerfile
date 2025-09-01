@@ -9,5 +9,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 # Gunicorn+Uvicorn for prod
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "app:app", \
-     "--bind", "0.0.0.0:8000", "--workers", "4", "--timeout", "60"]
+CMD ["gunicorn", "-k", "uvicorn", "app:app", \"--bind", "0.0.0.0:8000", "--workers", "4", "--timeout", "60"]
